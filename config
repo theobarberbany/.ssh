@@ -1,6 +1,9 @@
 ControlMaster auto
-ControlPath ~/.ssh/controlpaths/s_%h_%p_%r
+ControlPath ~/.ssh/controlpaths/%C
 
+Host *
+    UseKeychain yes
+    AddKeysToAgent yes
 
 Host spa_openstack
         ProxyCommand ssh -W %h:%p sanger
@@ -17,7 +20,7 @@ Host tag-validator
         User ubuntu
 Host vault
         ProxyCommand ssh -W %h:%p sanger
-        HostName 172.27.18.35 
+        HostName 172.27.19.118 
         IdentityFile ~/.ssh/ssh.key
         User alpine 
 Host vps 
@@ -27,6 +30,7 @@ Host vps
 Host sanger
         HostName ssh.sanger.ac.uk
         LocalForward 3128 wwwcache:3128
+        LocalForward 4282 172.17.63.10:4282
         IdentityFile ~/.ssh/ssh.key
         user tb15
         CompressionLevel 9
@@ -62,7 +66,7 @@ Host 10.0.0.*
         ForwardX11Trusted yes
 
 Host bastion
-        Hostname 172.27.18.137 
+        Hostname 172.27.19.138 
         ProxyCommand ssh -W %h:%p sanger
         User ubuntu
         IdentityFile ~/.ssh/ssh.key
@@ -72,7 +76,7 @@ Host bastion
         ForwardAgent yes
         ForwardX11Trusted yes
 Host master
-        Hostname 10.0.0.7
+        Hostname 10.0.0.11
         IdentityFile ~/.ssh/ssh.key
         ProxyCommand ssh -W %h:%p bastion
         User ubuntu
